@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: orders-web
+  labels:
+    app: orders-web
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: orders-web
+  template:
+    metadata:
+      labels:
+        app: orders-web
+    spec:
+      containers:
+      - name: nginx
+        image: nginx
+        ports:
+        - containerPort: 80
+        envFrom:
+        - configMapRef:
+            name: orders-web-config
+        resources:
+          requests:
+            cpu: 25m
+            memory: 32Mi
+          limits:
+            cpu: 100m
+            memory: 64Mi
